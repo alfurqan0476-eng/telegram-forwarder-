@@ -32,7 +32,6 @@ async def main():
     await client.run_until_disconnected()
 
 if __name__ == '__main__':
-    # Render Server Event Loop Fix
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     loop.run_until_complete(main())
