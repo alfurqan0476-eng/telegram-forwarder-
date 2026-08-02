@@ -2,8 +2,9 @@ import asyncio
 from telethon import TelegramClient, events
 
 # আপনার একদম সঠিক Telegram API Credentials
-API_ID  34889751
-API_HASH "3639049c90da5caaele732619e7a54ee"
+API_ID = 34889751
+
+API_HASH = "3639049c90da5caaele732619e7a54ee"
 
 # যে ৩টি চ্যানেল থেকে পোস্ট কপি হবে
 SOURCE_CHANNELS = [
