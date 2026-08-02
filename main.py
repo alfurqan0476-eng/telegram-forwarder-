@@ -1,9 +1,8 @@
 import asyncio
 from telethon import TelegramClient, events
 
-# আপনার একদম সঠিক Telegram API Credentials
+# আপনার Telegram API Credentials
 API_ID = 34889751
-
 API_HASH = "3639049c90da5caaele732619e7a54ee"
 
 # যে ৩টি চ্যানেল থেকে পোস্ট কপি হবে
@@ -33,5 +32,8 @@ async def main():
     await client.run_until_disconnected()
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    # Render / Server Event Loop Fix
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(main())
 
