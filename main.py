@@ -1,9 +1,4 @@
- import os
-import asyncio
-from telethon import TelegramClient, events
-from telethon.sessions import StringSession
-from http.server import HTTPServer, BaseHTTPRequestHandler
-import threading
+import os, asyncio, threading; from telethon import TelegramClient, events; from telethon.sessions import StringSession; from http.server import HTTPServer, BaseHTTPRequestHandler
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -24,16 +19,15 @@ SESSION_STRING = os.environ.get("SESSION_STRING")
 
 async def main():
     if not SESSION_STRING:
-        print("❌ Error: SESSION_STRING পাওয়া যায়নি!")
+        print("❌ SESSION_STRING পাওয়া যায়নি!")
         return
-
     client = TelegramClient(StringSession(SESSION_STRING), API_ID, API_HASH)
-
+    
     @client.on(events.NewMessage)
     async def my_event_handler(event):
         pass
-
-    print("🚀 টেলিগ্রাম ফরওয়ার্ডার বট সফলভাবে ব্যাকগ্রাউন্ডে চালু হয়েছে!")
+        
+    print("🚀 টেলিগ্রাম ফরওয়ার্ডার বট চালু হয়েছে!")
     await client.start()
     await client.run_until_disconnected()
 
