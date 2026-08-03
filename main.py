@@ -1,39 +1,33 @@
+import os
 import asyncio
 from telethon import TelegramClient, events
+from telethon.sessions import StringSession
 
-# আপনার সঠিক API Credentials (API_HASH ফিক্স করা হয়েছে)
-API_ID = 34889751
-API_HASH = "3639049c90da5caa1e732619e7a54ee"
+# Environment Variables থেকে সিকিউরভাবে ডাটা নিবে
+API_ID = int(os.environ.get("API_ID"))
+API_HASH = os.environ.get("API_HASH")
+SESSION_STRING = os.environ.get("SESSION_STRING")
 
-# চ্যানেল লিস্ট
-SOURCE_CHANNELS = [
-    'bnpbd_org',
-    'bjiofficial',
-    'albd1949'
-]
-
+SOURCE_CHANNELS = ['bnpbd_org', 'bjiofficial', 'albd1949']
 TARGET_CHANNEL = 'BD_A_J_B'
 
 async def main():
-    print("Userbot চালু হচ্ছে...")
-    
-    # Render / Python 3.10+ Event Loop Fix
-    async with TelegramClient('multi_forwarder_session', API_ID, API_HASH) as client:
+    print("ইউজারবট কানেক্ট হচ্ছে...")
+    async with TelegramClient(StringSession(SESSION_STRING), API_ID, API_HASH) as client:
         
         @client.on(events.NewMessage(chats=SOURCE_CHANNELS))
         async def forward_handler(event):
             try:
                 await client.send_message(TARGET_CHANNEL, event.message)
-                print("সফলভাবে নতুন পোস্ট আপনার চ্যানেলে ফরওয়ার্ড হয়েছে!")
+                print("সফলভাবে নতুন পোস্ট আপনার চ্যানেলে ফরওয়ার্ড হয়েছে!")
             except Exception as e:
                 print(f"ত্রুটি ঘটেছে: {e}")
 
-        print("\n-------------------------------------------")
+        print("---------------------------------------")
         print("🚀 ইউজারবট সম্পূর্ণ চালু এবং কাজ করছে!")
-        print("-------------------------------------------\n")
+        print("---------------------------------------")
         
         await client.run_until_disconnected()
 
 if __name__ == '__main__':
-    # আধুনিক Asyncio Runner
     asyncio.run(main())
