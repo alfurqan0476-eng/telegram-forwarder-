@@ -5,9 +5,6 @@ from telethon.sessions import StringSession
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import threading
 
-# -------------------------------------------------------------
-# ১. Render-এর জন্য ওয়েব সার্ভার (Port এরর বন্ধ করার জন্য)
-# -------------------------------------------------------------
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
@@ -21,16 +18,13 @@ def run_dummy_server():
 
 threading.Thread(target=run_dummy_server, daemon=True).start()
 
-# -------------------------------------------------------------
-# ২. টেলিগ্রাম ফরওয়ার্ডার বট কনফিগারেশন
-# -------------------------------------------------------------
 API_ID = 34889751
 API_HASH = "3639049c90da5caae0e732619e7a54ee"
 SESSION_STRING = os.environ.get("SESSION_STRING")
 
 async def main():
     if not SESSION_STRING:
-        print("❌ Error: SESSION_STRING পাওয়া যায়নি! Render-এর Environment Variable-এ যোগ করুন।")
+        print("❌ Error: SESSION_STRING পাওয়া যায়নি!")
         return
 
     client = TelegramClient(StringSession(SESSION_STRING), API_ID, API_HASH)
@@ -44,7 +38,6 @@ async def main():
     await client.run_until_disconnected()
 
 if __name__ == "__main__":
-    # Python 3.14+ এর জন্য Event Loop ঠিক করা
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     loop.run_until_complete(main())
